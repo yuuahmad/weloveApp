@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784389961407",
+    "project_id": "welove-project",
+    "storage_bucket": "welove-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784389961407:android:ed9858435a6758f3eff80a",
+        "android_client_info": {
+          "package_name": "com.example.welove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784389961407-3rthkv76q99kqjdat7bdlkut2v8a7ofv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcFdvAl_tGdh-80SLUG5E5H-T7wwWvxJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784389961407-3rthkv76q99kqjdat7bdlkut2v8a7ofv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
