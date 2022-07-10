@@ -6,6 +6,14 @@ class AuthServices {
 
   Stream<User?> get keadaanAuthberubah => _firebaseAuth.authStateChanges();
 
+  Future<String?> dapatkanUid() async {
+    return _firebaseAuth.currentUser?.uid;
+  }
+
+  Future<String?> dapatkanEmail() async {
+    return _firebaseAuth.currentUser?.email;
+  }
+
   Future<void> keluar() async {
     await _firebaseAuth.signOut();
   }
