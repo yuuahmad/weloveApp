@@ -12,7 +12,7 @@ class _TerimaPageState extends State<TerimaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TerimaPage"),
+        title: const Text("TerimaPage"),
       ),
     );
   }

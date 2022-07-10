@@ -80,7 +80,10 @@ class _MasukPageState extends State<MasukPage> {
 class InputPenting extends StatefulWidget {
   final String judulInput;
   final TextEditingController namaController;
-  const InputPenting({Key? key, required this.judulInput, required this.namaController}) : super(key: key);
+  final String hintText;
+  const InputPenting(
+      {Key? key, required this.judulInput, required this.namaController, this.hintText = "Masukkan Data"})
+      : super(key: key);
 
   @override
   State<InputPenting> createState() => _InputPentingState();
@@ -91,14 +94,18 @@ class _InputPentingState extends State<InputPenting> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 55 / 2),
+      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 55 / 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(55),
         color: Colors.grey[300],
       ),
       child: TextField(
         controller: widget.namaController,
-        decoration: InputDecoration(hintText: widget.judulInput, border: InputBorder.none),
+        decoration: InputDecoration(
+          labelText: widget.judulInput,
+          hintText: widget.hintText,
+          border: InputBorder.none,
+        ),
       ),
     );
   }

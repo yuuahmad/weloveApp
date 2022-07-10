@@ -3,16 +3,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:welove/firebase_options.dart';
-import 'package:welove/screens/homepage/home_page.dart';
-import 'package:welove/screens/isi_saldo_page.dart';
-import 'package:welove/screens/kirim_page.dart';
-import 'package:welove/screens/lainnya_page.dart';
 import 'package:welove/screens/login/daftar.dart';
 import 'package:welove/screens/login/masuk.dart';
 import 'package:welove/screens/lokasi_page.dart';
+import 'package:welove/screens/mainMenu/main_page.dart';
+import 'package:welove/screens/mainMenu/saya_page.dart';
 import 'package:welove/screens/saya/pengaturan_profil_page.dart';
-import 'package:welove/screens/saya_page.dart';
-import 'package:welove/screens/terima_page.dart';
+import 'package:welove/screens/wepay/isi_saldo_page.dart';
+import 'package:welove/screens/wepay/kirim_page.dart';
+import 'package:welove/screens/wepay/lainnya_page.dart';
+import 'package:welove/screens/wepay/terima_page.dart';
 import 'package:welove/services/auth_services.dart';
 
 void main() async {
@@ -83,7 +83,7 @@ class AuthWraper extends StatelessWidget {
   Widget build(BuildContext context) {
     final apakahAdaUser = context.watch<User?>();
     if (apakahAdaUser != null) {
-      return const HomePage();
+      return const MainPage();
     } else {
       return const MasukPage();
     }

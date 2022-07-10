@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:welove/main.dart';
+import 'package:welove/services/auth_services.dart';
+import 'package:welove/services/user_info_services.dart';
 
-import '../services/auth_services.dart';
+import '../../services/auth_services.dart';
 
 class SayaPage extends StatefulWidget {
   const SayaPage({Key? key}) : super(key: key);
@@ -56,24 +58,8 @@ class SayaPageState extends State<SayaPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FutureBuilder(
-                          future: userEmail,
-                          initialData: null,
-                          builder: (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              return Text(
-                                "dummy",
-                                style: Theme.of(context).textTheme.headline3,
-                              );
-                            } else {
-                              return Text("Loading...", style: Theme.of(context).textTheme.headline3);
-                            }
-                          },
-                        ),
-                        Text(
-                          "60 Wepoint",
-                          style: Theme.of(context).textTheme.headline3,
-                        ),
+                        const NamaPengguna(),
+                        const WepointPengguna(),
                         FutureBuilder(
                           future: userEmail,
                           initialData: null,
@@ -127,7 +113,7 @@ class SayaPageState extends State<SayaPage> {
                     Navigator.pop(context);
                     context.read<AuthServices>().keluar();
                   },
-                  child: TombolPenting(namaTombol: "keluar")),
+                  child: const TombolPenting(namaTombol: "keluar")),
             ],
           ),
         ),

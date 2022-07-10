@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:welove/screens/homepage/home_page.dart';
+import 'package:welove/screens/mainMenu/home_page.dart';
 
-class BeritaPage extends StatefulWidget {
+class BeritaDetailPage extends StatefulWidget {
   final BeritaHomeData beritaHomeData;
-  const BeritaPage({Key? key, required this.beritaHomeData}) : super(key: key);
+  const BeritaDetailPage({Key? key, required this.beritaHomeData}) : super(key: key);
 
   @override
-  State<BeritaPage> createState() => _BeritaPageState();
+  State<BeritaDetailPage> createState() => _BeritaDetailPageState();
 }
 
-class _BeritaPageState extends State<BeritaPage> {
+class _BeritaDetailPageState extends State<BeritaDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

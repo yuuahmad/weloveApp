@@ -19,9 +19,6 @@ class _DaftarPageState extends State<DaftarPage> {
   final TextEditingController ulangiPasswordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    Future<String?> userUid = context.read<AuthServices>().dapatkanUid();
-    Future<String?> userEmail = context.read<AuthServices>().dapatkanEmail();
-
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
@@ -58,10 +55,11 @@ class _DaftarPageState extends State<DaftarPage> {
                 FirebaseFirestore.instance.collection("users").doc(emailcontroller.text.trim()).set({
                   "email": emailcontroller.text.trim(),
                   "password": passwordcontroller.text.trim(),
-                  "nama": namacontroller.text.trim()
+                  "nama": namacontroller.text.trim(),
+                  "wepoint": 0
                 }, SetOptions(merge: true));
               },
-              child: TombolPenting(
+              child: const TombolPenting(
                 namaTombol: "daftar",
               ),
             ),
