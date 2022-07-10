@@ -4,8 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:welove/firebase_options.dart';
 import 'package:welove/screens/homepage/home_page.dart';
+import 'package:welove/screens/isi_saldo_page.dart';
+import 'package:welove/screens/kirim_page.dart';
+import 'package:welove/screens/lainnya_page.dart';
+import 'package:welove/screens/login/daftar.dart';
 import 'package:welove/screens/login/masuk.dart';
 import 'package:welove/screens/lokasi_page.dart';
+import 'package:welove/screens/saya/pengaturan_profil_page.dart';
+import 'package:welove/screens/saya_page.dart';
+import 'package:welove/screens/terima_page.dart';
 import 'package:welove/services/auth_services.dart';
 
 void main() async {
@@ -30,22 +37,40 @@ class _MyAppState extends State<MyApp> {
         StreamProvider(create: ((context) => context.read<AuthServices>().keadaanAuthberubah), initialData: null)
       ],
       child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Welove',
           routes: {
             // When navigating to the "/" route, build the FirstScreen widget.
             // '/': (context) => const AuthWraper(),
             // When navigating to the "/second" route, build the SecondScreen widget.
-            '/second': (context) => const LokasiPage(),
+            '/kirim_page': (context) => const KirimPage(),
+            '/terima_page': (context) => const TerimaPage(),
+            '/lokasi_page': (context) => const LokasiPage(),
+            '/lainnya_page': (context) => const LainnyaPage(),
+            '/isiSaldo_page': (context) => const IsiSaldoPage(),
+            '/saya_page': (context) => const SayaPage(),
+            '/pengaturanProfil_page': (context) => const PengaturanProfilPage(),
+            '/daftar_page': (context) => const DaftarPage(),
           },
           home: const AuthWraper(),
           theme: ThemeData(
               colorScheme: const ColorScheme.light().copyWith(primary: Colors.green[600]),
               textTheme: ThemeData.light().textTheme.copyWith(
-                    headline1: TextStyle(color: Colors.green[400], fontWeight: FontWeight.w500, fontSize: 25),
-                    headline2: TextStyle(color: Colors.green[400], fontWeight: FontWeight.w500, fontSize: 23),
-                    headline3: TextStyle(color: Colors.green[400], fontWeight: FontWeight.w500, fontSize: 18),
-                    headline4: TextStyle(color: Colors.green[400], fontWeight: FontWeight.w500, fontSize: 16),
-                    headline5: TextStyle(color: Colors.green[400], fontWeight: FontWeight.w500, fontSize: 12),
+                    headline1: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 25),
+                    headline2: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 23),
+                    headline3: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                    ),
+                    headline4: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16),
+                    headline5: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 12),
+                    headline6: const TextStyle(
+                        color: Color.fromARGB(255, 190, 255, 193), fontWeight: FontWeight.w400, fontSize: 14),
+                    subtitle1: const TextStyle(color: Colors.black, fontSize: 18),
+                    subtitle2: const TextStyle(
+                      color: Colors.black,
+                    ),
                   ))),
     );
   }
@@ -62,5 +87,44 @@ class AuthWraper extends StatelessWidget {
     } else {
       return const MasukPage();
     }
+  }
+}
+
+extension StringCasingExtension on String {
+  String toCapitalized() => length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+}
+
+class TombolPenting extends StatelessWidget {
+  final String namaTombol;
+  final Color? warnaTombol;
+  const TombolPenting({Key? key, this.namaTombol = "tombol", this.warnaTombol = const Color.fromARGB(255, 67, 160, 71)})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 140, vertical: 3),
+        decoration: BoxDecoration(
+          color: warnaTombol,
+          borderRadius: BorderRadius.circular(55),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.6),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 2),
+            )
+          ],
+        ),
+        child: Center(
+          child: Text(
+            namaTombol.toTitleCase(),
+            style: Theme.of(context).textTheme.headline3,
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -3,7 +3,7 @@ import 'package:welove/screens/homepage/home_page.dart';
 
 class BeritaPage extends StatefulWidget {
   final BeritaHomeData beritaHomeData;
-  BeritaPage({Key? key, required this.beritaHomeData}) : super(key: key);
+  const BeritaPage({Key? key, required this.beritaHomeData}) : super(key: key);
 
   @override
   State<BeritaPage> createState() => _BeritaPageState();

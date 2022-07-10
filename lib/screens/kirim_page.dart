@@ -12,7 +12,7 @@ class _KirimPageState extends State<KirimPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("KirimPage"),
+        title: const Text("KirimPage"),
       ),
     );
   }
