@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:welove/main.dart';
 import 'package:welove/screens/mainMenu/berita/berita_detail_page.dart';
 import 'package:welove/screens/mainMenu/main_page.dart';
+import 'package:welove/services/storage_services.dart';
 
 import '../../services/user_info_services.dart';
 
@@ -15,6 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
+    String? userEmail = FirebaseAuth.instance.currentUser?.email.toString();
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
@@ -30,28 +35,69 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.grey.withOpacity(0.6),
                       spreadRadius: 1,
                       blurRadius: 2,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     )
                   ],
                   color: Colors.green[500],
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
+                  borderRadius:
+                      const BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/saya_page");
-                      },
-                      child: SizedBox(
-                        height: 55,
-                        width: 55,
-                        child: DecoratedBox(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 212, 212, 212), borderRadius: BorderRadius.circular(55))),
-                      ),
-                    ),
-                  ),
+                  // padding ini ingin saya ganti menjadi gambar yang bisa dilihat
+                  StreamBuilder<Object>(
+                      stream: FirebaseFirestore.instance.collection("users").doc(userEmail).snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('Something went wrong');
+                        }
+
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Text("Loading");
+                        }
+                        Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+
+                        return FutureBuilder<Object>(
+                            future: storage.urlGambarUser(data["foto profil"], userEmail!),
+                            initialData: null,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                                return Container(
+                                  margin: const EdgeInsets.all(5),
+                                  child: SizedBox(
+                                    height: 50,
+                                    width: 50,
+                                    child: CircularProgressIndicator(color: Colors.green[700]),
+                                  ),
+                                );
+                              }
+                              if (snapshot.hasError) {
+                                return Container(
+                                  margin: const EdgeInsets.all(5),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.network(
+                                      'https://dagodreampark.co.id/media/k2/items/cache/86e8e67edae9219d12d438efd5f5a939_XL.jpg',
+                                      fit: BoxFit.cover,
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                );
+                              }
+                              return Container(
+                                margin: const EdgeInsets.all(5),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.network(
+                                    snapshot.data.toString(),
+                                    fit: BoxFit.cover,
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                ),
+                              );
+                            });
+                      }),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [NamaPengguna(), WepointPengguna()],
@@ -128,7 +174,7 @@ class BeritaHome extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+        margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -137,7 +183,7 @@ class BeritaHome extends StatelessWidget {
               color: Colors.grey.withOpacity(0.6),
               spreadRadius: 1,
               blurRadius: 2,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             )
           ],
         ),
@@ -148,11 +194,11 @@ class BeritaHome extends StatelessWidget {
               width: 125,
               height: 125,
               color: Colors.green[100],
-              child: Center(child: Text("gambar disini")),
+              child: const Center(child: Text("gambar disini")),
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10),
                 width: 100,
                 height: 100,
                 // color: Colors.green,
@@ -166,7 +212,7 @@ class BeritaHome extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(

@@ -47,7 +47,7 @@ class _MasukPageState extends State<MasukPage> {
                     .read<AuthServices>()
                     .masuk(email: emailcontroller.text.trim(), password: passwordcontroller.text.trim());
               },
-              child: TombolPenting(
+              child: const TombolPenting(
                 namaTombol: "masuk",
               ),
             ),

@@ -12,7 +12,7 @@ class _LokasiPageState extends State<LokasiPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("lokasi dropbox welove"),
+        title: const Text("lokasi dropbox welove"),
       ),
     );
   }

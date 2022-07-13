@@ -10,6 +10,7 @@ import 'package:welove/screens/lokasi_page.dart';
 import 'package:welove/screens/mainMenu/main_page.dart';
 import 'package:welove/screens/mainMenu/saya_page.dart';
 import 'package:welove/screens/saya/pengaturan_profil_page.dart';
+import 'package:welove/screens/scan/scan_tempat.dart';
 import 'package:welove/screens/wepay/isi_saldo_page.dart';
 import 'package:welove/screens/wepay/kirim_page.dart';
 import 'package:welove/screens/wepay/lainnya_page.dart';
@@ -54,12 +55,13 @@ class _MyAppState extends State<MyApp> {
             '/saya_page': (context) => const SayaPage(),
             '/pengaturanProfil_page': (context) => const PengaturanProfilPage(),
             '/daftar_page': (context) => const DaftarPage(),
+            '/scan_tempat': (context) => const ScanTempat(),
           },
           home: const AuthWraper(),
           theme: ThemeData(
               colorScheme: const ColorScheme.light().copyWith(primary: Colors.green[600]),
               textTheme: ThemeData.light().textTheme.copyWith(
-                    headline1: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 25),
+                    headline1: TextStyle(color: Colors.green[700], fontWeight: FontWeight.w400, fontSize: 25),
                     headline2: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 23),
                     headline3: const TextStyle(
                       color: Colors.white,

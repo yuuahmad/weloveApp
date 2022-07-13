@@ -1,13 +1,11 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:welove/main.dart';
-import 'package:welove/screens/mainMenu/berita/berita_detail_page.dart';
 import 'package:welove/screens/mainMenu/berita/berita_page.dart';
 import 'package:welove/screens/mainMenu/home_page.dart';
 import 'package:welove/screens/mainMenu/saya_page.dart';
-import 'package:welove/screens/mainMenu/scan_page.dart';
+import 'package:welove/screens/scan/scan_page.dart';
 import 'package:welove/screens/mainMenu/store_page.dart';
-import 'package:welove/services/user_info_services.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -18,6 +16,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+  // ignore: unused_field
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List layarDariBottomNavbar = [HomePage(), StorePage(), ScanPage(), BeritaPage(), SayaPage()];
 

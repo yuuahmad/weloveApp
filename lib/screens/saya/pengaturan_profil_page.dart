@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:welove/main.dart';
 import 'package:welove/screens/login/masuk.dart';
-import 'package:welove/services/user_info_services.dart';
 
 import '../../services/auth_services.dart';
 

@@ -56,7 +56,8 @@ class _DaftarPageState extends State<DaftarPage> {
                   "email": emailcontroller.text.trim(),
                   "password": passwordcontroller.text.trim(),
                   "nama": namacontroller.text.trim(),
-                  "wepoint": 0
+                  "wepoint": 0,
+                  "foto profil": ""
                 }, SetOptions(merge: true));
               },
               child: const TombolPenting(

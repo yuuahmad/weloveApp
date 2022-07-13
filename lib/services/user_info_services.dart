@@ -14,7 +14,7 @@ Future<String> dapatkanDataUser() async {
 }
 
 Future<String> dapatkanDataSemuaUser() async {
-  var data;
+  String data = "";
   await FirebaseFirestore.instance.collection("users").get().then((value) => data = value.toString());
   return data;
 }

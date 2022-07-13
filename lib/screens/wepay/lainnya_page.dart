@@ -1,8 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:welove/services/auth_services.dart';
 import 'package:welove/services/user_info_services.dart';
 
 class LainnyaPage extends StatefulWidget {
@@ -17,10 +17,19 @@ class _LainnyaPageState extends State<LainnyaPage> {
 
   @override
   Widget build(BuildContext context) {
-    Future<String?> userEmail = context.read<AuthServices>().dapatkanEmail();
+    String? userEmail = FirebaseAuth.instance.currentUser?.email.toString();
+    Future<StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>> namaGambarUser() async {
+      return FirebaseFirestore.instance.collection("users").doc(userEmail!).snapshots().listen(
+            // ignore: avoid_print
+            (event) => print("current data: ${event.data()}"),
+            // ignore: avoid_print
+            onError: (error) => print("Listen failed: $error"),
+          );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("LainnyaPage"),
+        title: const Text("LainnyaPage"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -30,11 +39,11 @@ class _LainnyaPageState extends State<LainnyaPage> {
               builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 // jika ada error tampilkan data ini
                 if (snapshot.hasError) {
-                  return Text("Something went wrong");
+                  return const Text("Something went wrong");
                 }
                 // jika dokumen tidak ditemukan tampilkan ini
                 if (snapshot.hasData && !snapshot.data!.exists) {
-                  return Text("Document does not exist");
+                  return const Text("Document does not exist");
                 }
                 // jika dokumen ada dan berhasil didapatkan, tampilkan ini
                 if (snapshot.connectionState == ConnectionState.done) {
@@ -42,38 +51,45 @@ class _LainnyaPageState extends State<LainnyaPage> {
                   return Text("data : ${snapshot.data!.data().toString()}");
                 }
                 // jika tidak semuanya, tampilkan loadingProgress
-                return Text("loading");
+                return const Text("loading");
               },
             ),
             // buat percobaan baru lagi karena saya masih penasaran dengan data yang saya miliki namun tidak bisa saya lihat
             // ini adalah tampian data dari fungsi yang saya buat sendiri
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             FutureBuilder(
                 future: dapatkanDataUser(),
                 builder: ((context, snapshot) {
                   if (snapshot.hasError) {
-                    return Text("Something went wrong");
+                    return const Text("Something went wrong");
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
                     return Text("data userrr: ${snapshot.data!.toString()}");
                   }
-                  return Text("loading");
+                  return const Text("loading");
                 })),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
+
             // ini adalah contoh dari flutter firebase documentation
+            // berisi semua data dari collection user
             const UserInformation(),
-            SizedBox(
+
+            // current user information only
+            const SizedBox(
               height: 100,
             ),
             Text(FirebaseAuth.instance.currentUser!.uid.toString()),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             Container(
-              child: NamaPengguna(),
               color: Colors.amber,
+              child: const NamaPengguna(),
             ),
-            Text("data")
+            const Text("data"),
+
+            // dari atas yang saya buat sendiri untuk mendapatkan gambar user
+            Text(namaGambarUser().toString())
           ],
         ),
       ),
@@ -98,11 +114,11 @@ class _UserInformationState extends State<UserInformation> {
       stream: _usersStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return const Text('Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return const Text("Loading");
         }
 
         return Column(
