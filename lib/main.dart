@@ -10,6 +10,8 @@ import 'package:welove/screens/lokasi_page.dart';
 import 'package:welove/screens/mainMenu/main_page.dart';
 import 'package:welove/screens/mainMenu/saya_page.dart';
 import 'package:welove/screens/saya/pengaturan_profil_page.dart';
+import 'package:welove/screens/scan/masukkan_sampah_page.dart';
+import 'package:welove/screens/scan/scan_sampah.dart';
 import 'package:welove/screens/scan/scan_tempat.dart';
 import 'package:welove/screens/wepay/isi_saldo_page.dart';
 import 'package:welove/screens/wepay/kirim_page.dart';
@@ -37,6 +39,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // ignore: prefer_const_constructors
+        ChangeNotifierProvider<SimpanDataTempat>(create: (_) => SimpanDataTempat()),
         Provider<AuthServices>(create: (_) => AuthServices(FirebaseAuth.instance)),
         StreamProvider(create: ((context) => context.read<AuthServices>().keadaanAuthberubah), initialData: null)
       ],
@@ -55,7 +59,11 @@ class _MyAppState extends State<MyApp> {
             '/saya_page': (context) => const SayaPage(),
             '/pengaturanProfil_page': (context) => const PengaturanProfilPage(),
             '/daftar_page': (context) => const DaftarPage(),
+            // untuk scan sampah,dan scan tempat untuk hasilnya, sudah diinclude kedalam
+            // kedua page diatas :)
             '/scan_tempat': (context) => const ScanTempat(),
+            '/scan_sampah': (context) => const ScanSampah(),
+            '/masukkan_sampah_page': (context) => const MasukkanSampahPage(),
           },
           home: const AuthWraper(),
           theme: ThemeData(

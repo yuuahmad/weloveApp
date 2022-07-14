@@ -4,7 +4,9 @@ class AuthServices {
   final FirebaseAuth _firebaseAuth;
   AuthServices(this._firebaseAuth);
 
-  Stream<User?> get keadaanAuthberubah => _firebaseAuth.authStateChanges();
+  Stream<User?> get keadaanAuthberubah {
+    return _firebaseAuth.authStateChanges();
+  }
 
   Future<String?> dapatkanUid() async {
     return _firebaseAuth.currentUser?.uid;

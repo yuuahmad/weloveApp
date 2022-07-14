@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:welove/main.dart';
 import 'package:welove/services/auth_services.dart';
@@ -34,6 +35,35 @@ class SayaPageState extends State<SayaPage> {
             // ignore: avoid_print
             onError: (error) => print("Listen failed: $error"),
           );
+    }
+
+    // perintah untuk mendapatkan data lokasi (percobaan mendapatkan data lokasi)
+    // saya full nyolong dari flutter pub.dev
+    Future<Position> _determinePosition() async {
+      bool serviceEnabled;
+      LocationPermission permission;
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        return Future.error('Location services are disabled.');
+      }
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return Future.error('Location permissions are denied');
+        }
+      }
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      }
+      return await Geolocator.getCurrentPosition();
+    }
+
+    Future<String> updatePosisi() async {
+      Position posisi = await _determinePosition();
+      String latitude = posisi.latitude.toString();
+      String longitude = posisi.longitude.toString();
+      return "lokasi: $latitude : $longitude";
     }
 
     return Scaffold(
@@ -147,6 +177,29 @@ class SayaPageState extends State<SayaPage> {
                         Text(
                           userUid ?? "tidak ada User",
                           style: Theme.of(context).textTheme.headline6,
+                        ),
+                        // lokasi pengguna
+                        FutureBuilder(
+                          future: updatePosisi(),
+                          initialData: null,
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                              return Text(
+                                "loading...",
+                                style: Theme.of(context).textTheme.headline6,
+                              );
+                            }
+                            if (snapshot.hasError) {
+                              return Text(
+                                "terjadi kesalahan dalam mendapatkan lokasi.",
+                                style: Theme.of(context).textTheme.headline6,
+                              );
+                            }
+                            return Text(
+                              snapshot.data,
+                              style: Theme.of(context).textTheme.headline6,
+                            );
+                          },
                         ),
                       ],
                     ),

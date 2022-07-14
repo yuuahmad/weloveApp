@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:welove/main.dart';
-import 'package:welove/screens/scan/hasil_scan_tempat_page.dart';
+import 'package:welove/screens/scan/hasil_scan_sampah_page.dart';
 
 class ScanSampah extends StatefulWidget {
   const ScanSampah({Key? key}) : super(key: key);
@@ -32,6 +32,12 @@ class _ScanSampahState extends State<ScanSampah> {
 
   @override
   Widget build(BuildContext context) {
+    // final simpanDataTempat = Provider.of<SimpanDataTempat>(context);
+
+    // SimpanDataTempat simpanDataTempat;
+    // ChangeNotifierProvider.value(value: simpanDataTempat);
+    // QRViewController? controller = simpanDataTempat.controller;
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -56,8 +62,8 @@ class _ScanSampahState extends State<ScanSampah> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HasilScanTempatPage(
-                          dataQrCode: result!.code!,
+                        builder: (context) => HasilScanSampahPage(
+                          dataQrCode: result?.code ?? "tanpa_data",
                         ),
                       ),
                     );
